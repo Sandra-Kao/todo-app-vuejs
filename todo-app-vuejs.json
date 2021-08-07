@@ -1,0 +1,19 @@
+{
+    "todos": [
+        {
+            "item": "Draw mock-up",
+            "isDone": false,
+            "dueToDate":""
+        },
+        {
+            "item": "UI/UX design",
+            "isDone": false,
+            "dueToDate":""
+        },
+        {
+            "item": "Write HTML and CSS",
+            "isDone": false,
+            "dueToDate":""
+        }
+    ]
+}

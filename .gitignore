@@ -1,3 +1,6 @@
+# /Custom setting
+db.js
+
 .DS_Store
 node_modules
 /dist

@@ -1,5 +1,35 @@
 <template>
   <div class="new-todo">
-    <h1>This is an todo page</h1>
+    <TodoOptions></TodoOptions>
   </div>
 </template>
+
+<script>
+import $store from "@/store/index.js";
+import TodoOptions from "@/components/TodoOptions.vue";
+export default {
+  name: "NewTodo",
+  components: {
+    TodoOptions,
+  },
+  props: {},
+  data() {
+    return {
+      todo: {
+        item: "",
+        isDone: false,
+        dueToDate: "",
+        details: "",
+      },
+    };
+  },
+  mounted() {
+    console.table(this.todos);
+  },
+  computed: {
+    todos() {
+      return $store.state.todos;
+    },
+  },
+};
+</script>

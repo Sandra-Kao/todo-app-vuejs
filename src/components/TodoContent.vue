@@ -1,61 +1,67 @@
 <template>
   <section>
-    <div class="todo-content">
-      <div class="todo-content__outer-1000 content-wrapper">
-        <h1>
-          Let's do this
-          <span>Get things done, one item at a time.</span>
-        </h1>
+    <ul class="todo-content__outer-1000 todo-wrapper">
+      <li class="todo-content__item-line" v-for="todo in todos" :key="todo.id">
+        <p class="padding-helf"
+            @click="switchChecked(todo.id)">{{todo.id}}
+          <i
+            class="far fa-circle"
+            :class="{ checked: todo.isDone }"
+          ></i>
+          <span>{{ todo.item }}</span>
+        </p>
+      </li>
+    </ul>
 
-        <main>
-          <ul class="todo-content__outer-1000">
-            <li
-              class="todo-content__item-line"
-              v-for="todo in todos"
-              :key="todo.item"
-            >
-              <p class="padding-helf">
-                <i class="far fa-circle" :class="{ checked: todo.isDone }"></i>
-                <span>{{ todo.item }}</span>
-              </p>
-            </li>
-          </ul>
-          <div class="todo-content__add-wrapper">
-            <!-- <div class="todo-content__add-input active">
-              <i class="fas fa-location-arrow"></i>
-              <i class="far fa-paper-plane"></i>
-              <i class="fas fa-feather-alt"></i>
-            </div> -->
-
-            <!-- <input
-              type="text"
-              value="123"
-              placeholder="456"
-              class="todo-content__add-input active"
-            /> -->
-
-            <router-link to="/newtodo">
-              <button class="todo-content__add-btn">
-                <i class="fas fa-plus"></i></button
-            ></router-link>
-          </div>
-        </main>
-      </div>
+    <div class="todo-content__add-wrapper">
+      <router-link to="/newtodo">
+        <button class="circle-btn">
+          <i class="fas fa-plus"></i></button
+      ></router-link>
     </div>
   </section>
 </template>
 
 <script>
 import $store from "@/store/index.js";
+
+import {computed} from 'vue';
+import {useStore} from "vuex";
+// import Vuex from 'vuex'
 export default {
   name: "TodoContent",
   props: {},
-  mounted() {
-    console.table(this.todos);
+  setup(){
+    const store = useStore();
+
+    let todos = computed(function () {
+      return store.state.todos
+    });
+
+    return {
+      todos
+    }
   },
+  mounted() {},
   computed: {
-    todos() {
-      return $store.state.todos;
+    // todos() {
+      // return store.state.todos;
+    // },
+  },
+  methods: {
+    // ...Vuex.mapActions(["setTodos"]),
+
+    switchChecked(id) {
+
+
+        console.log('todo', id)
+      const newTodo = this.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.isDoen = !todo.isDone;
+        }
+      });
+      
+      $store.commit('updateTodos',newTodo)
     },
   },
 };
@@ -87,13 +93,13 @@ export default {
 }
 
 .todo-content ul {
-  margin-top: 2.6rem;
-  list-style: none;
-  font-size: 1.3rem;
-  background: var(--color-primary-base);
-  padding: 50px;
-  border-radius: 10px;
-  min-height: 70vh;
+  // margin-top: 2.6rem;
+  // list-style: none;
+  // font-size: 1.3rem;
+  // background: var(--color-primary-base);
+  // padding: 50px;
+  // border-radius: 10px;
+  // min-height: 70vh;
 }
 
 .todo-content__item-line {
@@ -173,8 +179,8 @@ button.todo-content__add-btn:hover {
   cursor: pointer;
   color: var(--color-white);
 }
-button.todo-content__add-btn p:focus,
-button.todo-content__add-btn p:active {
+button.todo-content__add-btn i:focus,
+button.todo-content__add-btn i:active {
   color: var(--color-primary-light);
 }
 </style>
